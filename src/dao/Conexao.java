@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
+    //Dados do Banco de Dados
     private static final String URL = "jdbc:postgresql://localhost:5432/Spotifei";
     private static final String USUARIO = "kenezb";
     private static final String SENHA = "kenezb";
