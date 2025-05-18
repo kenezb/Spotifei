@@ -37,6 +37,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setText("SPOTIFEI - Menu");
 
         btnBuscarMusica.setText("Buscar Músicas");
+        btnBuscarMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarMusicaActionPerformed(evt);
+            }
+        });
 
         btnPlaylists.setText("Minhas Playlists");
 
@@ -96,6 +101,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Abre a tela login
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnBuscarMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMusicaActionPerformed
+        // TODO add your handling code here:
+        //Fecha a tela atual
+        this.dispose();
+        //Abre essa nova tela
+        new TelaBuscarMusica().setVisible(true);
+    }//GEN-LAST:event_btnBuscarMusicaActionPerformed
 
     /**
      * @param args the command line arguments

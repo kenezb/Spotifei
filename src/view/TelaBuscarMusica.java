@@ -80,6 +80,11 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaResultado);
 
         btnVoltar.setText("Voltar ao Menu");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,6 +187,14 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        //Fecha essa tela
+        this.dispose();
+        //Abre essa outra
+        new TelaPrincipal().setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
