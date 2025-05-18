@@ -50,6 +50,11 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         btnCadastro.setText("Cadastrar");
+        btnCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastroActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,6 +111,14 @@ public class TelaLogin extends javax.swing.JFrame {
         ControllerLogin controller = new ControllerLogin(this);
         controller.autenticarUsuario();
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
+        // TODO add your handling code here:
+        //Fecha a tela 
+        this.dispose();
+        //Abre essa outra
+        new TelaCadastroUsuario().setVisible(true);
+    }//GEN-LAST:event_btnCadastroActionPerformed
 
     /**
      * @param args the command line arguments
