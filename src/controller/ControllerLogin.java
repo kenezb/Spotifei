@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import view.TelaLogin;
+import view.TelaPrincipal;
 
 public class ControllerLogin {
     private TelaLogin view;
@@ -38,7 +39,10 @@ public class ControllerLogin {
             
             if (rs.next()) {
                 JOptionPane.showMessageDialog(view, "Seu Usuário foi logado!");
-                //AINDA NAO USADO ESSE LOCAL
+                //Fecha essa tela
+                view.dispose();
+                //Abre a tela inicial agora
+                new TelaPrincipal().setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(view, "Usuário ou senha "
                         + "incorretos!", "Erro!!!", JOptionPane.ERROR_MESSAGE);
