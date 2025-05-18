@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+//Imports 
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,6 +54,11 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome ", "Artista", "Gênero" }));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         tabelaResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,6 +134,54 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
     private void txtBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscaActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        //Aqui é onde busca os dados das musicas no Banco
+        String busca = txtBusca.getText();
+        String filtro = comboFiltro.getSelectedItem().toString();
+        
+        String sql = "SELECT m.id, m.nome AS musica_nome, m.genero, a.nome AS "
+                + "artista_nome " +
+                    "FROM musica m JOIN artista a ON m.id_artista = a.id " +
+                        "WHERE ";
+        if (filtro.equals("Nome")) {
+            //Seleciona o nome
+            sql += "m.nome ILIKE ?";
+        } else if (filtro.equals("Artista")) {
+            //Seleciona o artista
+            sql += "a.nome ILIKE ?";
+        } else if (filtro.equals("Gênero")) {
+            //Seleciona o genero
+            sql += "m.genero ILIKE ?";
+        }
+        
+        try{
+            Connection conn = dao.Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1 ,"%"  + busca +  "%");
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            //Limpando a tabela aqui
+            DefaultTableModel model = (DefaultTableModel) tabelaResultado.getModel();
+            model.setRowCount(0);
+            
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nomeMusica = rs.getString("musica_nome");
+                String artista = rs.getString("artista_nome");
+                String genero = rs.getString("genero");
+
+                model.addRow(new Object[]{  id , nomeMusica , artista , genero });
+            }
+            conn.close();
+            
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro na busca, " 
+                    + e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
