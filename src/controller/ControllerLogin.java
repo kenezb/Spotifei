@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import model.Usuario;
 import view.TelaLogin;
 import view.TelaPrincipal;
+import model.Sessao;
 
 public class ControllerLogin {
     private TelaLogin view;
@@ -38,6 +39,15 @@ public class ControllerLogin {
             ResultSet rs = dao.consultar(u);
             
             if (rs.next()) {
+                //Guardando usuario logado
+                Usuario usuarioAutenticado = new Usuario();
+                usuarioAutenticado.setId(rs.getInt("id"));
+                usuarioAutenticado.setNome(rs.getString("nome"));
+                usuarioAutenticado.setUsuario(rs.getString("usuario"));
+                usuarioAutenticado.setSenha(rs.getString("senha"));
+
+                Sessao.setUsuario(usuarioAutenticado);
+                
                 JOptionPane.showMessageDialog(view, "Seu Usuário foi logado!");
                 //Fecha essa tela
                 view.dispose();
