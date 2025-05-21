@@ -281,11 +281,20 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setInt(1 , idUsuario);
                 stmt.setInt(2, idMusica);
-                stmt.executeUpdate();
+                
+                //Marcação
+                int linhasMarcadas = stmt.executeUpdate();
             
-                //Para descurtir
-                JOptionPane.showMessageDialog(this, "Você descurtiu essa música!");
-                conn.close();
+                //Descurtir
+                if (linhasMarcadas > 0) {
+                    //Aqui mostra que foi possivel descurtir
+                    JOptionPane.showMessageDialog(this ,
+                            "Você descurtiu essa música!");
+                } else {
+                    //Aqui mostra que antes de descurtir precisa-se curtir
+                    JOptionPane.showMessageDialog(this ,
+                            "Para descurtir você precisa ter curtido antes!");
+                }
                 
             }catch (Exception e){
                 //Erro aqui
