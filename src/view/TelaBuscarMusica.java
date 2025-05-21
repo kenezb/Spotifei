@@ -54,7 +54,7 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
             }
         });
 
-        comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome ", "Artista", "Gênero" }));
+        comboFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome", "Artista", "Gênero" }));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +169,7 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         //Aqui é onde busca os dados das musicas no Banco
         String busca = txtBusca.getText();
-        String filtro = comboFiltro.getSelectedItem().toString();
+        String filtro = comboFiltro.getSelectedItem().toString().trim();
         
         String sql = "SELECT m.id, m.nome AS musica_nome, m.genero, a.nome AS "
                 + "artista_nome " +
@@ -204,6 +204,28 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
                 String genero = rs.getString("genero");
 
                 model.addRow(new Object[]{  id , nomeMusica , artista , genero });
+                
+                //Aqui registraremos as musicas buscadas no historico
+                try{
+                    int idUsuario = Sessao.getUsuario().getId();
+                    int idMusica =  rs.getInt("id");
+                    
+                    //Inserindo com comandos
+                    String sqlHistorico = "INSERT INTO historico_busca "
+                            + "(id_usuario, id_musica) VALUES (?, ?)";
+                    PreparedStatement stmtHistorico = 
+                            conn.prepareStatement(sqlHistorico);
+                    //Registra o id do usuario
+                    stmtHistorico.setInt(1, idUsuario);
+                    //Registra o id da musica
+                    stmtHistorico.setInt(2, idMusica);
+                    //atualiza o historico aqui
+                    stmtHistorico.executeUpdate();
+                }catch (Exception ex){
+                    //Mensagem de possivel erro
+                    System.out.println("Erro ao registrar no histórico" 
+                            + ex.getMessage());
+                }
             }
             conn.close();
             

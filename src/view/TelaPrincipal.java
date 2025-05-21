@@ -4,6 +4,9 @@
  */
 package view;
 
+//Imports
+import view.TelaHistorico;
+
 /**
  *
  * @author Kenez
@@ -46,6 +49,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnPlaylists.setText("Minhas Playlists");
 
         btnHistorico.setText("Histórico");
+        btnHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoricoActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair/Voltar ao Login");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +117,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Abre essa nova tela
         new TelaBuscarMusica().setVisible(true);
     }//GEN-LAST:event_btnBuscarMusicaActionPerformed
+
+    private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
+        // TODO add your handling code here:
+        //fecha essa tela 
+        this.dispose();
+        // abre essa outra
+        new TelaHistorico().setVisible(true);
+    }//GEN-LAST:event_btnHistoricoActionPerformed
 
     /**
      * @param args the command line arguments

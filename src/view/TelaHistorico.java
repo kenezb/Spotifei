@@ -4,6 +4,13 @@
  */
 package view;
 
+//Imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Kenez
@@ -26,21 +33,145 @@ public class TelaHistorico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bntCurtidas = new javax.swing.JButton();
+        btnDescurtidas = new javax.swing.JButton();
+        btnUltimasBuscas = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaHistorico = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        bntCurtidas.setText("Musicas Curtidas");
+        bntCurtidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntCurtidasActionPerformed(evt);
+            }
+        });
+
+        btnDescurtidas.setText("Musicas Descurtidas");
+        btnDescurtidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescurtidasActionPerformed(evt);
+            }
+        });
+
+        btnUltimasBuscas.setText("Ultimas 10 Buscas");
+
+        btnVoltar.setText("Voltar");
+
+        tabelaHistorico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nome", "Artista", "Gênero"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabelaHistorico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnVoltar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(bntCurtidas)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnDescurtidas)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnUltimasBuscas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(217, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bntCurtidas)
+                    .addComponent(btnDescurtidas)
+                    .addComponent(btnUltimasBuscas))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(btnVoltar)
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bntCurtidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCurtidasActionPerformed
+        // TODO add your handling code here:
+        //Aqui mostraremos na tabela as musicas curtidas pelo usuario
+        int idUsuario = model.Sessao.getUsuario().getId();
+        
+        try{
+            //Conexao com bd
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos SQL
+            String sql = "SELECT m.id, m.nome, a.nome AS artista, m.genero " + 
+                         "FROM curtida c " + 
+                         "JOIN musica m ON c.id_musica = m.id " + 
+                         "JOIN artista a ON m.id_artista = a.id " + 
+                         "WHERE c.id_usuario = ? AND c.status = true";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            
+            DefaultTableModel model = (DefaultTableModel) 
+                    tabelaHistorico.getModel();
+            model.setRowCount(0); 
+            
+            //Mostrar de fato na tabela
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString( "nome");
+                String artista = rs.getString( "artista");
+                String genero = rs.getString("genero");
+                
+                model.addRow(new Object[]{ id, nome, artista, genero });
+            }
+            
+            conn.close();
+        }catch (Exception e) {
+            //Possivel erro que pode dar
+            JOptionPane.showMessageDialog(this, "Erro ao carregar curtidas!"
+                    + e.getMessage());
+        }
+    }//GEN-LAST:event_bntCurtidasActionPerformed
+
+    private void btnDescurtidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescurtidasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDescurtidasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +209,11 @@ public class TelaHistorico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntCurtidas;
+    private javax.swing.JButton btnDescurtidas;
+    private javax.swing.JButton btnUltimasBuscas;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabelaHistorico;
     // End of variables declaration//GEN-END:variables
 }
