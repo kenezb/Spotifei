@@ -97,6 +97,11 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         });
 
         btnDescurtir.setText("Descurtir");
+        btnDescurtir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescurtirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -253,6 +258,46 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnCurtirActionPerformed
+
+    private void btnDescurtirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescurtirActionPerformed
+        // TODO add your handling code here:
+        //Descurtida mexer aqui
+        
+        int linha = tabelaResultado.getSelectedRow();
+        
+        if(linha>=0){
+            //Dita a coluna que esta 
+            int idMusica = (int) tabelaResultado.getValueAt(linha, 0);
+            //Pega o id do usuario para armazenar as curtidas
+            int idUsuario = model.Sessao.getUsuario().getId();
+        
+            try{
+                //Conexão com o banco
+                Connection conn = dao.Conexao.conectar();
+            
+                //Inserindo no banco
+                String sql = "UPDATE curtida SET status ="
+                        + " FALSE WHERE id_usuario = ? AND id_musica = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1 , idUsuario);
+                stmt.setInt(2, idMusica);
+                stmt.executeUpdate();
+            
+                //Para descurtir
+                JOptionPane.showMessageDialog(this, "Você descurtiu essa música!");
+                conn.close();
+                
+            }catch (Exception e){
+                //Erro aqui
+                JOptionPane.showMessageDialog(this, "Erro ao descurtir: " 
+                    + e.getMessage());
+        }
+        }else {
+            //Precisa escolher a musica a ser curtida
+            JOptionPane.showMessageDialog(this, 
+                    "Escolha a música a ser descurtida.");
+        }
+    }//GEN-LAST:event_btnDescurtirActionPerformed
 
     /**
      * @param args the command line arguments
