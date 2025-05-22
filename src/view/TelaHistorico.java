@@ -57,6 +57,11 @@ public class TelaHistorico extends javax.swing.JFrame {
         });
 
         btnUltimasBuscas.setText("Ultimas 10 Buscas");
+        btnUltimasBuscas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUltimasBuscasActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
 
@@ -209,9 +214,51 @@ public class TelaHistorico extends javax.swing.JFrame {
         }catch (Exception e){
             //Possiveis erros exibem isso:
             JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar descurtidas: " + e.getMessage());
+                    "Erro ao carregar descurtidas!" + e.getMessage());
         }
     }//GEN-LAST:event_btnDescurtidasActionPerformed
+
+    private void btnUltimasBuscasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimasBuscasActionPerformed
+        // TODO add your handling code here:
+        //Aqui vamos exibir as 10 ultimas buscas
+        int idUsuario = model.Sessao.getUsuario().getId();
+        
+        try{
+            //conexao com bd
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos SQL/ limitado a 10 buscas
+            String sql = "SELECT m.id, m.nome, a.nome AS artista, m.genero " + 
+                         "FROM historico_busca h " + 
+                         "JOIN musica m ON h.id_musica = m.id " + 
+                         "JOIN artista a ON m.id_artista = a.id " + 
+                         "WHERE h.id_usuario = ? " + 
+                         "ORDER BY h.data DESC LIMIT 10";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1 , idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            
+            DefaultTableModel model = (DefaultTableModel) 
+                    tabelaHistorico.getModel();
+            model.setRowCount(0);
+            
+            //Exibindo de verdade na tabela
+            
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String artista = rs.getString("artista");
+                String genero = rs.getString("genero");
+                
+                model.addRow(new Object[]{ id, nome, artista, genero });
+            }
+            conn.close();
+        }catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar as últimas buscas!" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnUltimasBuscasActionPerformed
 
     /**
      * @param args the command line arguments
