@@ -136,7 +136,7 @@ public class TelaHistorico extends javax.swing.JFrame {
             //Conexao com bd
             Connection conn = dao.Conexao.conectar();
             
-            //Comandos SQL
+            //Comandos SQL/ true para curtida
             String sql = "SELECT m.id, m.nome, a.nome AS artista, m.genero " + 
                          "FROM curtida c " + 
                          "JOIN musica m ON c.id_musica = m.id " + 
@@ -171,6 +171,46 @@ public class TelaHistorico extends javax.swing.JFrame {
 
     private void btnDescurtidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescurtidasActionPerformed
         // TODO add your handling code here:
+        //Aqui mostraremos as musicas descurtidas pelo usuario
+        int idUsuario = model.Sessao.getUsuario().getId();
+        
+        try{
+            //Conexão com bd
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos para SQL/ false para descurtida
+            String sql = "SELECT m.id, m.nome, a.nome AS artista, m.genero " + 
+                         "FROM curtida c " + 
+                         "JOIN musica m ON c.id_musica = m.id " + 
+                         "JOIN artista a ON m.id_artista = a.id " + 
+                         "WHERE c.id_usuario = ? AND c.status = false";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1 , idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            
+            DefaultTableModel model = (DefaultTableModel)
+                    tabelaHistorico.getModel();
+            model.setRowCount(0);
+            
+            //Mostra de fato na tabela
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String artista = rs.getString("artista");
+                String genero = rs.getString("genero");
+                
+                model.addRow(new Object[]{ id, nome, artista, genero });
+            }
+            
+            conn.close();
+            
+            
+        }catch (Exception e){
+            //Possiveis erros exibem isso:
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar descurtidas: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnDescurtidasActionPerformed
 
     /**
