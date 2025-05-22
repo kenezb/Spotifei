@@ -64,6 +64,11 @@ public class TelaHistorico extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         tabelaHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -259,6 +264,14 @@ public class TelaHistorico extends javax.swing.JFrame {
                     "Erro ao carregar as últimas buscas!" + e.getMessage());
         }
     }//GEN-LAST:event_btnUltimasBuscasActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        //Fecha essa tela
+        this.dispose();
+        //Abre essa outra(voltar)
+        new TelaPrincipal().setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
