@@ -4,6 +4,12 @@
  */
 package view;
 
+//Imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Kenez
@@ -15,6 +21,8 @@ public class TelaPlaylist extends javax.swing.JFrame {
      */
     public TelaPlaylist() {
         initComponents();
+        //Para carregar as playlists na tabela
+        carregarPlaylists();
     }
 
     /**
@@ -39,6 +47,11 @@ public class TelaPlaylist extends javax.swing.JFrame {
         jLabel1.setText("Playlists");
 
         btnCriarPlaylist.setText("Criar Playlist");
+        btnCriarPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarPlaylistActionPerformed(evt);
+            }
+        });
 
         tabelaPlaylists.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,9 +98,9 @@ public class TelaPlaylist extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(91, 91, 91)
+                        .addGap(85, 85, 85)
                         .addComponent(txtNomePlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCriarPlaylist))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
@@ -120,6 +133,46 @@ public class TelaPlaylist extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCriarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarPlaylistActionPerformed
+        // TODO add your handling code here:
+        //Aqui onde iremos criar novas playlists
+        
+        int idUsuario = model.Sessao.getUsuario().getId();
+        String nome = txtNomePlaylist.getText().trim();
+        
+        //Caso nao digite antes
+        if(nome.isEmpty()){
+            JOptionPane.showMessageDialog(this,
+                    "É preciso dar um nome a Playlist!");
+            return;
+        }
+        
+        try {
+            //Conexão com banco
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos SQL
+            String sql = "INSERT INTO playlist (nome, id_usuario) VALUES (?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1 , nome);
+            stmt.setInt(2 , idUsuario);
+            stmt.executeUpdate();
+            
+            conn.close();
+            
+            //Se der certo:
+            JOptionPane.showMessageDialog(this,
+                    "Playlist criada com sucesso!");
+            txtNomePlaylist.setText("");
+            
+            //Mostra as playlists na tabela 
+            carregarPlaylists();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao tentar criar Playlist" + e.getMessage());
+        }
+    }//GEN-LAST:event_btnCriarPlaylistActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +207,37 @@ public class TelaPlaylist extends javax.swing.JFrame {
                 new TelaPlaylist().setVisible(true);
             }
         });
+    }
+    
+    private void carregarPlaylists() {
+        int idUsuario = model.Sessao.getUsuario().getId();
+        
+        try{
+            //Conexao
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos SQL
+            String sql = "SELECT id, nome FROM playlist WHERE id_usuario = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            
+            DefaultTableModel model = (DefaultTableModel)
+                    tabelaPlaylists.getModel();
+            //Aqui limpa a tabela
+            model.setRowCount(0);
+            
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                model.addRow(new Object[]{ id, nome });
+            }
+            conn.close();
+        }catch (Exception e) {
+            //Possíveis erros
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar Playlist!" + e.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

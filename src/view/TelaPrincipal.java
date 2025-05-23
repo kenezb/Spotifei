@@ -7,6 +7,7 @@ package view;
 //Imports
 import view.TelaHistorico;
 
+
 /**
  *
  * @author Kenez
@@ -47,6 +48,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         btnPlaylists.setText("Minhas Playlists");
+        btnPlaylists.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlaylistsActionPerformed(evt);
+            }
+        });
 
         btnHistorico.setText("Histórico");
         btnHistorico.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +131,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // abre essa outra
         new TelaHistorico().setVisible(true);
     }//GEN-LAST:event_btnHistoricoActionPerformed
+
+    private void btnPlaylistsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaylistsActionPerformed
+        // TODO add your handling code here:
+        //Fecha essa tela
+        this.dispose();
+        //Abre essa outra
+        new TelaPlaylist().setVisible(true);
+    }//GEN-LAST:event_btnPlaylistsActionPerformed
 
     /**
      * @param args the command line arguments
