@@ -82,6 +82,11 @@ public class TelaPlaylist extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaPlaylists);
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         btnVerMusicas.setText("Ver músicas da Playlist");
         btnVerMusicas.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +197,14 @@ public class TelaPlaylist extends javax.swing.JFrame {
                     "Selecione uma Playlist.");
         }
     }//GEN-LAST:event_btnVerMusicasActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        //Fecha essa tela
+        this.dispose();
+        //Abre essa outra
+        new TelaPrincipal().setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
