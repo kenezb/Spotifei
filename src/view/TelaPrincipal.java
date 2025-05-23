@@ -20,7 +20,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         //Tela cheia nessa tela
-        this.setExtendedState(MAXIMIZED_BOTH);
+        //this.setExtendedState(MAXIMIZED_BOTH);
+        //fundo preto
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
     }
 
     /**
@@ -40,8 +42,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 255, 51));
         jLabel1.setText("SPOTIFEI - Menu");
 
+        btnBuscarMusica.setBackground(new java.awt.Color(51, 255, 51));
+        btnBuscarMusica.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnBuscarMusica.setText("Buscar Músicas");
         btnBuscarMusica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,6 +55,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnPlaylists.setBackground(new java.awt.Color(51, 255, 51));
+        btnPlaylists.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnPlaylists.setText("Minhas Playlists");
         btnPlaylists.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +64,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnHistorico.setBackground(new java.awt.Color(51, 255, 51));
+        btnHistorico.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnHistorico.setText("Histórico");
         btnHistorico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +73,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSair.setBackground(new java.awt.Color(51, 255, 51));
+        btnSair.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSair.setText("Sair/Voltar ao Login");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,32 +89,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(388, 388, 388)
-                        .addComponent(btnHistorico))
+                        .addGap(454, 454, 454)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnBuscarMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnHistorico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnPlaylists, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(9, 9, 9))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(369, 369, 369)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPlaylists)
-                            .addComponent(btnBuscarMusica)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(360, 360, 360)
-                        .addComponent(btnSair)))
-                .addContainerGap(389, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(480, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscarMusica)
-                .addGap(48, 48, 48)
-                .addComponent(btnPlaylists)
-                .addGap(53, 53, 53)
-                .addComponent(btnHistorico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(btnBuscarMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(btnPlaylists, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
                 .addComponent(btnSair)
-                .addGap(30, 30, 30))
+                .addGap(19, 19, 19))
         );
 
         pack();

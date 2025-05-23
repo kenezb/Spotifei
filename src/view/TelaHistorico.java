@@ -23,7 +23,9 @@ public class TelaHistorico extends javax.swing.JFrame {
     public TelaHistorico() {
         initComponents();
         //Tela cheia nessa tela
-        this.setExtendedState(MAXIMIZED_BOTH);
+        //this.setExtendedState(MAXIMIZED_BOTH);
+        //fundo preto
+        getContentPane().setBackground(new java.awt.Color(0, 0, 0));
     }
 
     /**
@@ -44,6 +46,8 @@ public class TelaHistorico extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        bntCurtidas.setBackground(new java.awt.Color(51, 255, 51));
+        bntCurtidas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         bntCurtidas.setText("Musicas Curtidas");
         bntCurtidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,6 +55,8 @@ public class TelaHistorico extends javax.swing.JFrame {
             }
         });
 
+        btnDescurtidas.setBackground(new java.awt.Color(51, 255, 51));
+        btnDescurtidas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnDescurtidas.setText("Musicas Descurtidas");
         btnDescurtidas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,6 +64,8 @@ public class TelaHistorico extends javax.swing.JFrame {
             }
         });
 
+        btnUltimasBuscas.setBackground(new java.awt.Color(51, 255, 51));
+        btnUltimasBuscas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnUltimasBuscas.setText("Ultimas 10 Buscas");
         btnUltimasBuscas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,13 +73,18 @@ public class TelaHistorico extends javax.swing.JFrame {
             }
         });
 
-        btnVoltar.setText("Voltar");
+        btnVoltar.setBackground(new java.awt.Color(51, 255, 51));
+        btnVoltar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnVoltar.setText("Voltar ao menu");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
             }
         });
 
+        tabelaHistorico.setBackground(new java.awt.Color(0, 0, 0));
+        tabelaHistorico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tabelaHistorico.setForeground(new java.awt.Color(51, 255, 51));
         tabelaHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -98,6 +111,7 @@ public class TelaHistorico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaHistorico.setGridColor(new java.awt.Color(153, 153, 153));
         jScrollPane1.setViewportView(tabelaHistorico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,35 +119,36 @@ public class TelaHistorico extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(147, Short.MAX_VALUE)
+                .addComponent(bntCurtidas)
+                .addGap(58, 58, 58)
+                .addComponent(btnDescurtidas)
+                .addGap(59, 59, 59)
+                .addComponent(btnUltimasBuscas)
+                .addGap(266, 266, 266))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(btnVoltar))
+                        .addGap(76, 76, 76)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 986, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(bntCurtidas)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnDescurtidas)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnUltimasBuscas))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(217, Short.MAX_VALUE))
+                        .addGap(16, 16, 16)
+                        .addComponent(btnVoltar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntCurtidas)
+                    .addComponent(btnUltimasBuscas)
                     .addComponent(btnDescurtidas)
-                    .addComponent(btnUltimasBuscas))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                    .addComponent(bntCurtidas))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btnVoltar)
-                .addGap(18, 18, 18))
+                .addGap(25, 25, 25))
         );
 
         pack();
