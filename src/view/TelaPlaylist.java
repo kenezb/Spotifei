@@ -84,6 +84,11 @@ public class TelaPlaylist extends javax.swing.JFrame {
         btnVoltar.setText("Voltar");
 
         btnVerMusicas.setText("Ver músicas da Playlist");
+        btnVerMusicas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerMusicasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,6 +178,20 @@ public class TelaPlaylist extends javax.swing.JFrame {
                     "Erro ao tentar criar Playlist" + e.getMessage());
         }
     }//GEN-LAST:event_btnCriarPlaylistActionPerformed
+
+    private void btnVerMusicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMusicasActionPerformed
+        // TODO add your handling code here:
+        int linha = tabelaPlaylists.getSelectedRow();
+        
+        if(linha>=0){
+            int idPlaylist = (int) tabelaPlaylists.getValueAt(linha, 0);
+            new TelaMusicasDaPlaylist(idPlaylist).setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma Playlist.");
+        }
+    }//GEN-LAST:event_btnVerMusicasActionPerformed
 
     /**
      * @param args the command line arguments

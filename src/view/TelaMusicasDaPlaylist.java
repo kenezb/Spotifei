@@ -4,6 +4,13 @@
  */
 package view;
 
+//Imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Kenez
@@ -13,8 +20,49 @@ public class TelaMusicasDaPlaylist extends javax.swing.JFrame {
     /**
      * Creates new form TelaMusicasDaPlaylist
      */
-    public TelaMusicasDaPlaylist() {
+    
+    private int idPlaylist;
+    
+    public TelaMusicasDaPlaylist(int idPlaylist) {
         initComponents();
+        this.idPlaylist = idPlaylist;
+        carregarMusicas();
+    }
+    
+    private void carregarMusicas(){
+        try{
+            //Conexao com bd
+            Connection conn = dao.Conexao.conectar();
+            
+            //Comandos SQL
+            String sql = "SELECT m.id, m.nome, a.nome AS artista, m.genero " + 
+                         "FROM musica_playlist mp " + 
+                         "JOIN musica m ON mp.id_musica = m.id " + 
+                         "JOIN artista a ON m.id_artista = a.id " + 
+                         "WHERE mp.id_playlist = ?";
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1 , idPlaylist);
+            ResultSet rs = stmt.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) tabelaMusicasPlaylist.getModel();
+            model.setRowCount(0);
+            
+            while(rs.next()){
+                //Atributos da tabela
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String artista = rs.getString("artista");
+                String genero = rs.getString("genero");
+                
+                model.addRow(new Object[]{id, nome, artista, genero});
+            }
+            
+            conn.close();
+        }catch(Exception e) {
+            //possiveis erros
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar músicas!" + e.getMessage());
+        }
     }
 
     /**
@@ -65,8 +113,18 @@ public class TelaMusicasDaPlaylist extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tabelaMusicasPlaylist);
 
         btnRemoverMusica.setText("Remover Música");
+        btnRemoverMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverMusicaActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,40 +161,53 @@ public class TelaMusicasDaPlaylist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRemoverMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverMusicaActionPerformed
+        // TODO add your handling code here:
+        int linha = tabelaMusicasPlaylist.getSelectedRow();
+        
+        if (linha>=0){
+            int idMusica = (int) tabelaMusicasPlaylist.getValueAt(linha, 0);
+            
+            try{
+                //Conexao com banco
+                Connection conn = dao.Conexao.conectar();
+                        
+                //Comandos SQL
+                String sql = "DELETE FROM musica_playlist WHERE id_musica = ? AND id_playlist = ?";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1 , idMusica);
+                stmt.setInt(2 , idPlaylist);
+                stmt.executeUpdate();
+                conn.close();
+                
+                JOptionPane.showMessageDialog(this,
+                        "Música removida da Playlist!");
+                //Carrega depois da remoção
+                carregarMusicas();
+                
+            }catch(Exception e){
+                //Possiveis erros
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao remover música!" + e.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma música para remover!");
+        }
+    }//GEN-LAST:event_btnRemoverMusicaActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        // TODO add your handling code here:
+        //Fecha essa tela
+        this.dispose();
+        //Abre essa outra
+        new TelaPlaylist().setVisible(true);
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaMusicasDaPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaMusicasDaPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaMusicasDaPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaMusicasDaPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaMusicasDaPlaylist().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRemoverMusica;
