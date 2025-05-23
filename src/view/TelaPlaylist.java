@@ -23,6 +23,8 @@ public class TelaPlaylist extends javax.swing.JFrame {
         initComponents();
         //Para carregar as playlists na tabela
         carregarPlaylists();
+        //Tela cheia nessa tela
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**

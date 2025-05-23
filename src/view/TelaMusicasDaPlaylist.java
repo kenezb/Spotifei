@@ -27,6 +27,8 @@ public class TelaMusicasDaPlaylist extends javax.swing.JFrame {
         initComponents();
         this.idPlaylist = idPlaylist;
         carregarMusicas();
+        //Tela cheia nessa tela
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
     
     private void carregarMusicas(){

@@ -25,6 +25,8 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
      */
     public TelaBuscarMusica() {
         initComponents();
+        //Tela cheia nessa tela
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**

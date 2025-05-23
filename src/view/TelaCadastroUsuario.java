@@ -16,6 +16,8 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      */
     public TelaCadastroUsuario() {
         initComponents();
+        //Tela cheia nessa tela
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**

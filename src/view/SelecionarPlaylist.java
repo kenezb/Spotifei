@@ -24,6 +24,8 @@ public class SelecionarPlaylist extends javax.swing.JFrame {
         initComponents();
         this.idMusica = idMusica;
         carregarPlaylists();
+        //Tela cheia nessa tela
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
     //Carregar playlists no combobox
     private void carregarPlaylists(){
