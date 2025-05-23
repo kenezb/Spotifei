@@ -53,10 +53,12 @@
                       <Component id="jLabel1" min="-2" pref="135" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="476" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="356" max="-2" attributes="0"/>
                       <Component id="btnCurtir" min="-2" pref="77" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="btnDescurtir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="btnAdicionarPlaylist" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="437" max="32767" attributes="0"/>
@@ -84,6 +86,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDescurtir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnCurtir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAdicionarPlaylist" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
@@ -174,6 +177,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDescurtirActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAdicionarPlaylist">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Adicionar m&#xfa;sica na Playlist"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdicionarPlaylistActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

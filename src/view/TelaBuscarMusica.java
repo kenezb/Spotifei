@@ -8,6 +8,11 @@ import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import model.Sessao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
 
 /**
  *
@@ -41,6 +46,7 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         btnCurtir = new javax.swing.JButton();
         btnDescurtir = new javax.swing.JButton();
+        btnAdicionarPlaylist = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,6 +109,13 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
             }
         });
 
+        btnAdicionarPlaylist.setText("Adicionar música na Playlist");
+        btnAdicionarPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarPlaylistActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,10 +143,12 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
                         .addGap(360, 360, 360)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(476, 476, 476)
+                        .addGap(356, 356, 356)
                         .addComponent(btnCurtir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnDescurtir)))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnDescurtir)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnAdicionarPlaylist)))
                 .addContainerGap(437, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -153,7 +168,8 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDescurtir)
-                    .addComponent(btnCurtir))
+                    .addComponent(btnCurtir)
+                    .addComponent(btnAdicionarPlaylist))
                 .addGap(44, 44, 44)
                 .addComponent(btnVoltar)
                 .addGap(14, 14, 14))
@@ -330,6 +346,22 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDescurtirActionPerformed
 
+    private void btnAdicionarPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarPlaylistActionPerformed
+        // TODO add your handling code here:
+        //Aqui vamos para a tela selecionar playlist
+        int linhaSelecionada = tabelaResultado.getSelectedRow();
+        if (linhaSelecionada>=0) {
+            int idMusica = (int) tabelaResultado.getValueAt(linhaSelecionada, 0);
+            
+            //Abrindo a tela e selecionando o ID correto da musica
+            new SelecionarPlaylist(idMusica).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione uma música primeiro!");
+        }
+        
+    }//GEN-LAST:event_btnAdicionarPlaylistActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -366,6 +398,7 @@ public class TelaBuscarMusica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionarPlaylist;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCurtir;
     private javax.swing.JButton btnDescurtir;
