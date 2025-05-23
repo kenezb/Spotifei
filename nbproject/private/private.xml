@@ -7,14 +7,14 @@
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/model/Usuario.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/dao/UsuarioDAO.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaCadastroUsuario.java</file>
-            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/controller/ControllerCadastroUsuario.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaLogin.java</file>
-            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/controller/ControllerLogin.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaPrincipal.java</file>
-            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaBuscarMusica.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/model/Sessao.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaHistorico.java</file>
             <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaPlaylist.java</file>
+            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaMusicasDaPlaylist.java</file>
+            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/SelecionarPlaylist.java</file>
+            <file>file:/C:/Users/Kenez/Documents/NetBeansProjects/Spotifei/src/view/TelaBuscarMusica.java</file>
         </group>
     </open-files>
 </project-private>
